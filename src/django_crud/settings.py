@@ -27,6 +27,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     
+    'coreapi',
     'tasks',
     'rest_framework',
     'corsheaders'
@@ -118,3 +119,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # cors-headers
 CORS_ALLOWED_ORIGINS = []
+
+# Autoschema legacy
+REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
+}
