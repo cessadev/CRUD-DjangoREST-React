@@ -8,5 +8,5 @@ export function Navigation() {
             </Link>
             <Link to="/tasks-create">Create Task</Link>
         </div>
-    )
-}
+    );
+};
