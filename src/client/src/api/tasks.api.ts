@@ -7,3 +7,5 @@ const tasksApiURL = axios.create({
 export const getAllTasks = () => tasksApiURL.get("/");
 
 export const createTask = (task: object) => tasksApiURL.post("/", task);
+
+export const deleteTask = (id: number) => tasksApiURL.delete(`/${id}`);
