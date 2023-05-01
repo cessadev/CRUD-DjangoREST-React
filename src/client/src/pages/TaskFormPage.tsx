@@ -1,20 +1,36 @@
 import { useForm } from "react-hook-form";
-import { createTask, deleteTask } from "../api/tasks.api";
+import { useEffect } from "react";
+import { createTask, deleteTask, updateTask, getTask } from "../api/tasks.api";
 import { useNavigate, useParams } from "react-router-dom";
 
 export function TaskFormPage() {
     const { register, handleSubmit, formState: {
         errors
-    } } = useForm();
+    }, setValue } = useForm();
 
     const navigate = useNavigate();
 
     const params = useParams();
 
-    const onSubmit = handleSubmit(async data => {
-        await createTask(data);
+    const onSubmit = handleSubmit(async (data) => {
+        if (params.id) {
+            await updateTask(Number(params.id), data);
+        } else {
+            await createTask(data);
+        };
         navigate("/tasks")
     });
+
+    useEffect(() => {
+        async function loadTask() {
+            if (params.id) {
+                const { data: { title, description } } = await getTask(Number(params.id));
+                setValue("title", title);
+                setValue("description", description);
+            };
+        };
+        loadTask();
+    }, []);
 
     return (
         <div>
@@ -42,7 +58,7 @@ export function TaskFormPage() {
                         navigate("/tasks");
                     };
                 }}>Delete</button>
-            };
+            }
         </div>
     );
 };
